@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/security.css")}}"/>
+{% endblock %}
+
+{% block body %}
+<nav>
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{{path("login")}}">Login</a></li>
+        <li><a href="{{path("register")}}">Register</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="container-content">
+        <div class="login-content">
+        <div class="row">
+            <form class="col s12" action="{{ path('login') }}" method="POST" id="login-form">
+                <h1 class="title-content-container">Login</h1>
+                <p class="error" id="blockErrorLogin">{% if error %} {{ error.messageKey|trans(error.messageData) }} {% endif %}</p>
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input id="username_login" type="text" class="validate" name="_username" autocomplete="new-username">
+                    <label for="username_login">Username</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password_login" type="password" class="validate" name="_password" autocomplete="new-password">
+                        <label for="password_login">Password</label>
+                    </div>
+                </div>
+
+
+                <div class="row center-align">
+                    <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">LOGIN
+                        <i class="material-icons right">offline_pin</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

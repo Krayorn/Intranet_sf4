@@ -1,0 +1,73 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/security.css")}}"/>
+{% endblock %}
+
+{% block body %}
+<nav>
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{{path("login")}}">Login</a></li>
+        <li><a href="{{path("register")}}">Register</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+  <div class="container-content">
+
+      <div class="register-content">
+        <div class="row">
+          <p id="welcome"> <p>
+            <form class="col s12" action="{{ path('register') }}" method="POST" id="register-form">
+                <h1 class="title-content-container">Register</h1>
+                <p class="error" id="error"></p>
+            <div class="row">
+                <div class="input-field col s6 ">
+                    <input id="first_name" type="text" class="validate" name="firstname_create" autocomplete="new-password">
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate" name="lastname_create" autocomplete="new-password">
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                <input id="email" type="email" class="validate" name="email_create" autocomplete="new-password"><span id="spanEmail"></span>
+                <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate" name="password_create" autocomplete="new-password">
+                    <label for="password">Password</label><span id="spanPassword"></span><span id="comparePassword"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="verif_password" type="password" class="validate" name="verif_password_create" autocomplete="new-password">
+                    <label for="verif_password">Password verification</label><span id="spanVerifPassword"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="username" type="text" class="validate" name="username_create" autocomplete="new-password">
+                    <label for="username">Username</label>
+                </div>
+            </div>
+            <div class="row center-align">
+                <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+            </form>
+        </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{{asset("bundles/ticket/js/security.js")}}"></script>
+{% endblock %}

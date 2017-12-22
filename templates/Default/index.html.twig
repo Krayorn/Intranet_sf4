@@ -1,0 +1,26 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+    <!-- <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/security.css")}}"/>
+    <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/hover.css")}}"/> -->
+{% endblock %}
+
+{% block body %}
+
+<div class="ctn">
+    <div class="bg-home">
+        <div class="content-button">
+            <div class="bg-button hvr-grow-shadow">
+                <a href="{{path("login")}}">Login</i></a>
+            </div>
+            <div class="bg-button hvr-grow-shadow">
+                <a href="{{path("register")}}">Register</i></a>
+            </div>
+        </div>
+        <h1 class="welcome">Customer service support</h1>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
