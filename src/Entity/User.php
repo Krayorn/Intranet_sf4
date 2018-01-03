@@ -190,7 +190,7 @@ class User implements UserInterface
      */
     public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**
