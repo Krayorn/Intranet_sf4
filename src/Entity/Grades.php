@@ -133,50 +133,52 @@ class Grades
         return $this;
     }
 
+
+
     /**
-     * Get the value of number
+     * Get the value of commentary
      *
-     * @return  int
+     * @return  text
      */
-    public function getNumber()
+    public function getCommentary()
     {
-        return $this->number;
+        return $this->commentary;
     }
 
     /**
-     * Set the value of number
+     * Set the value of commentary
      *
-     * @param  int  $number
+     * @param  text  $commentary
      *
      * @return  self
      */
-    public function setNumber(int $number)
+    public function setCommentary(text $commentary)
     {
-        $this->number = $number;
+        $this->commentary = $commentary;
 
         return $this;
     }
 
     /**
-     * Get the value of average
+     * Get the value of grade
      *
      * @return  float
      */
-    public function getAverage()
+    public function getGrade()
     {
-        return $this->average;
+        return $this->grade;
     }
 
     /**
-     * Set the value of average
+     * Set the value of grade
      *
-     * @param  float  $average
+     * @param  float  $grade
      *
      * @return  self
      */
-    public function setAverage(float $average)
+    public function setGrade(float $grade)
     {
-        $this->average = $average;
+        $this->grade = $grade;
 
         return $this;
     }

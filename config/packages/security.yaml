@@ -18,6 +18,10 @@ security:
                 login_path: login
                 check_path: login
 
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_TEACHER]
+
+
             # activate different ways to authenticate
 
             # http_basic: ~
