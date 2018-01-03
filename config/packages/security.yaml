@@ -17,6 +17,14 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+            logout:         true
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_TEACHER]
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/student, roles: ROLE_USER }
+        - { path: ^/teacher, roles: ROLE_TEACHER }
 
             # activate different ways to authenticate
 

@@ -12,8 +12,28 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        // $user = $this->getUser();
-        // $em = $this->getDoctrine()->getEntityManager();
+        return $this->render('Default/index.html.twig');
+    }
+
+    /**
+     * @Route("/student", name="student")
+     */
+    public function studentAction()
+    {
+        if($this->isGranted('ROLE_USER')) {
+            return $this->render('Default/student.html.twig');
+        }
+        return $this->render('Default/index.html.twig');
+    }
+
+    /**
+     * @Route("/teacher", name="teacher")
+     */
+    public function teacherAction()
+    {
+        if($this->isGranted('ROLE_TEACHER')) {
+            return $this->render('Default/teacher.html.twig');
+        }
         return $this->render('Default/index.html.twig');
     }
 }

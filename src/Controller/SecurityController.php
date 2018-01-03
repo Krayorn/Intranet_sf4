@@ -55,8 +55,7 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
 
         $lastUsername = $authenticationUtils->getLastUsername();
-        // $rep = $em->getRepository('App\Entity\User')->getPassword($lastUsername);
-        echo $lastUsername;
+
         return $this->render(
         'Security/login.html.twig',
         array(
