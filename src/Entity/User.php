@@ -77,7 +77,11 @@ class User implements UserInterface
      * @Assert\NotBlank()
      */
     private $createdAt;
-
+    /**
+     * @ORM\ManyToMany(targetEntity="Subject", inversedBy="users")
+     * @ORM\JoinTable(name="users_subjects")
+     */
+    private $subjects;
 
     /**
      * @inheritDoc
@@ -287,5 +291,25 @@ class User implements UserInterface
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Get the value of subjects
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
+
+    /**
+     * Set the value of subjects
+     *
+     * @return  self
+     */
+    public function setSubjects($subjects)
+    {
+        $this->subjects = $subjects;
+
+        return $this;
     }
 }
