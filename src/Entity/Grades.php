@@ -4,10 +4,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * User
+ * Grades
  *
  * @ORM\Table(name="grades")
  * @ORM\Entity(repositoryClass="App\Repository\GradesRepository")
@@ -32,7 +31,7 @@ class Grades
     private $grade;
 
     /**
-     * @var text
+     * @var string
      *
      * @ORM\Column(name="commentary", type="text")
      * @Assert\NotBlank()
@@ -108,10 +107,6 @@ class Grades
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->title;
-    }
 
     /**
      * Get the value of subjects
@@ -138,7 +133,7 @@ class Grades
     /**
      * Get the value of commentary
      *
-     * @return  text
+     * @return  string
      */
     public function getCommentary()
     {
@@ -148,7 +143,7 @@ class Grades
     /**
      * Set the value of commentary
      *
-     * @param  text  $commentary
+     * @param  string  $commentary
      *
      * @return  self
      */
@@ -160,7 +155,7 @@ class Grades
     }
 
     /**
-     * Get the value of grade
+     * Get the value of gradef
      *
      * @return  float
      */

@@ -10,4 +10,13 @@ namespace App\Repository;
  */
 class GradesRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getGradesForUser($user)
+    {
+            return $this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.users = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

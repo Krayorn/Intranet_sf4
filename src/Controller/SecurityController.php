@@ -30,7 +30,7 @@ class SecurityController extends Controller
             $user -> setEmail($request->get('email_create'));
             $user -> setUsername($request->get('username_create'));
             $user->setCreatedAt(new \DateTime);
-            $user -> setRole(array('ROLE_ADMIN'));
+            $user -> setRole(array('ROLE_USER'));
             $hash = $this->get('security.password_encoder')->encodePassword($user,$request->get('password_create'));
             $user -> setPassword($hash);
             $em->persist($user);

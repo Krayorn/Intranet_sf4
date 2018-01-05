@@ -10,14 +10,19 @@
 <div class="ctn">
     <div class="bg-home">
         <div class="content-button">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="bg-button hvr-grow-shadow">
+                <a href="{{path("logout")}}"><i class="material-icons ajust-icon">keyboard_tab</i></a>
+            </div>
+        {% else %}
             <div class="bg-button hvr-grow-shadow">
                 <a href="{{path("login")}}">Login</i></a>
             </div>
             <div class="bg-button hvr-grow-shadow">
                 <a href="{{path("register")}}">Register</i></a>
             </div>
+        {% endif %}
         </div>
-        HOME PAGEUH
     </div>
 </div>
 {% endblock %}

@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
- * User
+ * Subject
  *
  * @ORM\Table(name="subject")
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
@@ -56,9 +57,8 @@ class Subject
      */
     public function __construct()
     {
-        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->role = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->students = new ArrayCollection();
+        $this->role = new ArrayCollection();
     }
 
     /**
@@ -113,6 +113,30 @@ class Subject
         $this->users = $users;
 
         return $this;
+    }
+
+     /** Add users
+     *
+     *  @return self
+     */
+    public function addUsers(\App\Entity\User $users)
+    {
+        $this->users[] = $users;
+        if(!$users->getSubjects()->contains($this)){
+            $users->addSubjects($this);
+        }
+
+        return $this;
+    }
+
+    /** Remove users
+     *
+     * @param \App\Entity\User $users
+     */
+    public function removeUsers(\App\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+        $users->removeSubjects($this);
     }
 
     public function __toString()

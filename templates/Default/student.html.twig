@@ -9,17 +9,60 @@
 
 <div class="ctn">
     <div class="bg-home">
-        <div class="content-button">
-            <div class="bg-button hvr-grow-shadow">
-                <a href="{{path("login")}}">Login</i></a>
-            </div>
-            <div class="bg-button hvr-grow-shadow">
-                <a href="{{path("register")}}">Register</i></a>
-            </div>
+        <div class="bg-button hvr-grow-shadow">
+                <a href="{{path("logout")}}"><i class="material-icons ajust-icon">keyboard_tab</i></a>
         </div>
+
         Hey {{app.user.firstname}} {{app.user.lastname}}
+
         <h1 class="welcome">This'll be the student default Page !</h1>
     </div>
+
+    <h1> Subject list : </h1>
+    {% for subject in subjects %}
+        {{subject.title}}
+    {% endfor %}
+
+    <h1> Take subject </h1>
+    <div class="row">
+
+          <p class="error" id="error"></p>
+    <form class="col s12" action="{{ path('student') }}" method="POST" id="subject-form" name="subject-form">
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <select name='subject' id="subject">
+                      <option value="" disabled selected>Choose a subject</option>
+                      {% for subject in subjects %}
+                      {% if subject not in student_subject %}
+                        <option value="{{subject.id}}">{{subject.title}}</option>
+                      {% endif %}
+                      {% endfor %}
+                    </select>
+                    <label>Subject Select</label>
+                  </div>
+                </div>
+                <div class="row center-align">
+                    <button class="btn waves-effect waves-light red accent-1" id ="button-submit" type="submit" name="action">SEND
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+    <h1> Subject list : </h1>
+    {% for subject in student_subject %}
+        {{subject.title}}
+    {% endfor %}
+
+    <h1> Grades list : </h1>
+
+    {% for grade in grades %}
+        {{grade.grade}} <br>
+        {{grade.commentary}} <br>
+
+    {% endfor %}
 </div>
 {% endblock %}
 
