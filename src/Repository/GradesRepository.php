@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query as Query;
 /**
  * GradesRepository
  *
@@ -17,6 +18,6 @@ class GradesRepository extends \Doctrine\ORM\EntityRepository
             ->where('u.users = :user')
             ->setParameter('user', $user)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 }

@@ -24,16 +24,37 @@ class DefaultController extends Controller
      */
     public function studentAction()
     {
+        if(!$this->isGranted('ROLE_USER')) {
+            return $this->render('Default/index.html.twig');
+        }
+
         $em = $this->getDoctrine()->getEntityManager();
         $request = Request::createFromGlobals();
         $subjectRepository = $em->getRepository('App\Entity\Subject');
+
         $user = $this->getUser();
-        $userId= $user->getId();
         $student_subject = $user->getSubjects();
-        $grades =  $em->getRepository('App\Entity\Grades')->getGradesForUser($user);
         $all_subjects = $subjectRepository->findAll();
-         if ($request->getMethod() === 'POST')
-        {
+
+        $allGrades =  $em->getRepository('App\Entity\Grades')->getGradesForUser($user);
+
+        $grades = [];
+        foreach($allGrades as $grade) {
+            if (!isset($grades[$grade->getSubjects()->getTitle()]['grades'])) {
+                $grades[$grade->getSubjects()->getTitle()]['grades'] = [];
+            }
+            array_push($grades[$grade->getSubjects()->getTitle()]['grades'], $grade);
+        }
+
+        foreach($grades as $subject => $subjectGrades) {
+            $sum = 0;
+            foreach($grades[$subject]['grades'] as $grade) {
+                $sum += $grade->getGrade();
+            }
+            $grades[$subject]['average'] = $sum / count($grades[$subject]['grades']);
+        }
+
+        if ($request->getMethod() === 'POST') {
             $idSubject = $request->get('subject');
             $subject = $subjectRepository->findOneById($idSubject);
             if($subject !== null) {
@@ -41,10 +62,11 @@ class DefaultController extends Controller
                 $em->flush();
             }
         }
-        if(!$this->isGranted('ROLE_USER')) {
-            return $this->render('Default/index.html.twig');
-        }
-        return $this->render('Default/student.html.twig',['subjects' => $all_subjects, 'student_subject' => $student_subject, 'grades' => $grades]);
+
+        return $this->render('Default/student.html.twig',
+            ['subjects' => $all_subjects,
+            'student_subject' => $student_subject,
+            'grades' => $grades]);
     }
 
     /**

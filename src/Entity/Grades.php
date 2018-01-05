@@ -147,7 +147,7 @@ class Grades
      *
      * @return  self
      */
-    public function setCommentary(text $commentary)
+    public function setCommentary(string $commentary)
     {
         $this->commentary = $commentary;
 

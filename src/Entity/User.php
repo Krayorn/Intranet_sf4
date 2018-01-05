@@ -329,6 +329,7 @@ class User implements UserInterface
     public function removeSubjects(Subject $subject){
         $this->subjects->removeElement($subject);
     }
+
     public function __toString()
     {
         return $this->username;

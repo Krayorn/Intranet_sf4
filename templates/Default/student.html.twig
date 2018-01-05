@@ -18,11 +18,6 @@
         <h1 class="welcome">This'll be the student default Page !</h1>
     </div>
 
-    <h1> Subject list : </h1>
-    {% for subject in subjects %}
-        {{subject.title}}
-    {% endfor %}
-
     <h1> Take subject </h1>
     <div class="row">
 
@@ -34,9 +29,9 @@
                     <select name='subject' id="subject">
                       <option value="" disabled selected>Choose a subject</option>
                       {% for subject in subjects %}
-                      {% if subject not in student_subject %}
-                        <option value="{{subject.id}}">{{subject.title}}</option>
-                      {% endif %}
+                        {% if subject not in student_subject %}
+                          <option value="{{subject.id}}">{{subject.title}}</option>
+                        {% endif %}
                       {% endfor %}
                     </select>
                     <label>Subject Select</label>
@@ -58,9 +53,13 @@
 
     <h1> Grades list : </h1>
 
-    {% for grade in grades %}
-        {{grade.grade}} <br>
-        {{grade.commentary}} <br>
+    {% for subject, subject_grades in grades %}
+        <h1>{{loop.index}}: {{subject}}</h1>
+        {% for grade in subject_grades.grades %}
+            {{grade.grade}} <br>
+            {{grade.commentary}} <br>
+        {% endfor %}
+        <p>Moyenne: {{subject_grades.average|number_format(2)}} </p>
 
     {% endfor %}
 </div>
