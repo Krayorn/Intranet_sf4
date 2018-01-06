@@ -85,6 +85,11 @@ class User implements UserInterface
     private $subjects;
 
     /**
+     * @ORM\OneToMany(targetEntity="Grades", mappedBy="users")
+     */
+    private $grades;
+
+    /**
      * @inheritDoc
      */
     public function getSalt()
@@ -333,5 +338,25 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->username;
+    }
+
+    /**
+     * Get the value of grades
+     */
+    public function getGrades()
+    {
+        return $this->grades;
+    }
+
+    /**
+     * Set the value of grades
+     *
+     * @return  self
+     */
+    public function setGrades($grades)
+    {
+        $this->grades = $grades;
+
+        return $this;
     }
 }

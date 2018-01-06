@@ -36,7 +36,7 @@ class DefaultController extends Controller
         $student_subject = $user->getSubjects();
         $all_subjects = $subjectRepository->findAll();
 
-        $allGrades =  $em->getRepository('App\Entity\Grades')->getGradesForUser($user);
+        $allGrades =  $user->getGrades();
 
         $grades = [];
         foreach($allGrades as $grade) {
@@ -77,6 +77,11 @@ class DefaultController extends Controller
         if(!$this->isGranted('ROLE_TEACHER')) {
             return $this->render('Default/index.html.twig');
         }
-        return $this->render('Default/teacher.html.twig');
+
+        $teacher = $this->getUser();
+        $teacher_subjects = $teacher->getSubjects();
+
+        return $this->render('Default/teacher.html.twig',
+            ['teacher_subjects' => $teacher_subjects]);
     }
 }

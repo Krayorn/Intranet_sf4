@@ -19,6 +19,26 @@
         </div>
         Hey {{app.user.firstname}} {{app.user.lastname}}
         <h1 class="welcome">This'll be the teacher default Page !</h1>
+
+        <h1 class="welcome">Here you'll see the list of the subjects you teach</h1>
+            {% for subject in teacher_subjects %}
+                {{subject.title}}
+            {% endfor %}
+
+        <h1 class="welcome">Here you'll see the list of the students in each of your subjects</h1>
+            {% for subject in teacher_subjects %}
+                <h2>{{subject.title}}</h2>
+                {% for student in subject.users %}
+                    {% if student.roles[0] == 'ROLE_USER' %}
+                        {{student.username}}<br/>
+                        {% for grade in student.grades %}
+                            {% if grade.subjects.title == subject %}
+                                {{grade.grade}} and {{grade.commentary}}<br />
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
     </div>
 </div>
 {% endblock %}

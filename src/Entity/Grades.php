@@ -177,4 +177,9 @@ class Grades
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->grade . " - " . $this->commentary;
+    }
 }
