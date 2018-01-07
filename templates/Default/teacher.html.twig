@@ -29,7 +29,7 @@
                 <h2>{{subject.title}}</h2>
                 {% for student in subject.users %}
                     {% if student.roles[0] == 'ROLE_USER' %}
-                        {{student.username}}<br/>
+                       <div id="student_name"> {{student.firstname}} {{ student.lastname}}</div><br/>
                         <!-- Trigger/Open The Modal -->
                         <button class="myBtn">Open Modal</button>
 
@@ -40,7 +40,7 @@
                         <div class="modal-content">
                             <span class="close">&times;</span>
                             <form class="col s12" action="{{ path('create_grade', {'slug': student.id}) }}" method="POST" id="message-form" name="message-form">
-                                <h1 class="title-content-container">Add a note for {{student.firstname}} {{student.lastname}}</h1>
+                                <div class="name">{{student.firstname}} {{student.lastname}}</div>
                                 <p class="error" id="error"></p>
                                 <div class="row">
                                     <div class="input-field col s12">
