@@ -1,8 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block stylesheets %}
-    <!-- <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/security.css")}}"/>
-    <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/hover.css")}}"/> -->
+   <link type="text/css" rel="stylesheet" href="{{asset("css/modal.css")}}"/>
 {% endblock %}
 
 {% block body %}
@@ -31,11 +30,52 @@
                 {% for student in subject.users %}
                     {% if student.roles[0] == 'ROLE_USER' %}
                         {{student.username}}<br/>
-                        {% for grade in student.grades %}
-                            {% if grade.subjects.title == subject %}
-                                {{grade.grade}} and {{grade.commentary}}<br />
-                            {% endif %}
-                        {% endfor %}
+                        <!-- Trigger/Open The Modal -->
+                        <button class="myBtn">Open Modal</button>
+
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <form class="col s12" action="{{ path('create_grade', {'slug': student.id}) }}" method="POST" id="message-form" name="message-form">
+                                <h1 class="title-content-container">Add a note for {{student.firstname}} {{student.lastname}}</h1>
+                                <p class="error" id="error"></p>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <select name='subject_grade' id="subject_grade">
+                                        <option value="" disabled selected>Choose a subject</option>
+                                            <option value="{{subject.id}}">{{subject.title}}</option>
+                                        </select>
+                                        <label>Subject Select</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                    <input type="text" autocomplete="new-grade" id="grade" class="materialize-textarea validate" name="grade"/>
+                                    <label for="grade">grade</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                    <textarea autocomplete="new-commentary" id="commentary_create" class="materialize-textarea validate" name="commentary_create"></textarea>
+                                    <label for="commentary_create">Commentary</label>
+                                    </div>
+                                </div>
+                                <div class="row center-align">
+                                    <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                {% for grade in student.grades %}
+                    {% if grade.subjects.title == subject %}
+                        {{grade.grade}} and {{grade.commentary}}<br />
+                    {% endif %}
+                {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% endfor %}
@@ -44,4 +84,5 @@
 {% endblock %}
 
 {% block javascript %}
+<script src="{{asset("js/modal.js")}}"></script>
 {% endblock %}
