@@ -5,64 +5,97 @@
     <link type="text/css" rel="stylesheet" href="{{asset("bundles/ticket/css/hover.css")}}"/> -->
 {% endblock %}
 
+{% block header %}
+    <p class="col s3" >{{app.user.firstname}} {{app.user.lastname}}</p>
+
+    <p class="col s6 center-align">Student Page</p>
+
+    <p class="col s3 right-align">
+        <a class="white-text" href="{{path("logout")}}">Logout</a>
+    </p>
+
+{% endblock %}
+
 {% block body %}
 
-<div class="ctn">
-    <div class="bg-home">
-        <div class="bg-button hvr-grow-shadow">
-                <a href="{{path("logout")}}"><i class="material-icons ajust-icon">keyboard_tab</i></a>
-        </div>
-
-        Hey {{app.user.firstname}} {{app.user.lastname}}
-
-        <h1 class="welcome">This'll be the student default Page !</h1>
-    </div>
-
-    <h1> Take subject </h1>
-    <div class="row">
-
-          <p class="error" id="error"></p>
-    <form class="col s12" action="{{ path('student') }}" method="POST" id="subject-form" name="subject-form">
-
+    <div class="section">
+        <h4> Subscribe to a new subject </h4>
+        <div class="row">
+            <form class="col s12" action="{{ path('student') }}" method="POST" id="subject-form" name="subject-form">
                 <div class="row">
-                  <div class="input-field col s12">
-                    <select name='subject' id="subject">
-                      <option value="" disabled selected>Choose a subject</option>
-                      {% for subject in subjects %}
-                        {% if subject not in student_subject %}
-                          <option value="{{subject.id}}">{{subject.title}}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                    <label>Subject Select</label>
-                  </div>
+                    <div class="input-field col s12">
+                        <select name='subject' id="subject">
+                            <option value="" disabled selected>Choose a subject</option>
+                            {% for subject in subjects %}
+                                {% if subject not in student_subject %}
+                                    <option value="{{subject.id}}">{{subject.title}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <label>Subject Select</label>
+                    </div>
                 </div>
                 <div class="row center-align">
-                    <button class="btn waves-effect waves-light red accent-1" id ="button-submit" type="submit" name="action">SEND
-                        <i class="material-icons right">send</i>
+                    <button class="btn waves-effect waves-light blue-grey accent-1" id ="button-submit" type="submit" name="action">SEND
+                    <i class="material-icons right">send</i>
                     </button>
                 </div>
             </form>
         </div>
+    </div>
 
+    <div class="section">
+        <h4> Your subjects : </h4>
+        <div class="row">
+            {% for subject in student_subject %}
+                <p> {{subject.title}}
+                    {% for user in subject.users %}
+                        {% if user.roles[0] == 'ROLE_TEACHER' %}
+                            par {{user.username}}
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            {% endfor %}
+        </div>
+    </div>
 
-    <h1> Subject list : </h1>
-    {% for subject in student_subject %}
-        {{subject.title}}
-    {% endfor %}
+    <div class="section">
+        <h4> Your grades : </h4>
 
-    <h1> Grades list : </h1>
+        {% for subject, subject_grades in grades %}
+            <h5>{{subject}}</h5>
+            <table>
+                {% for grade in subject_grades.grades %}
+                    {% if loop.first %}
+                        <tr>
+                            <td>
+                                Note
+                            </td>
+                            <td>
+                                Commentaire
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td>
+                            {{grade.grade}}
+                        </td>
+                        <td>
+                            {{grade.commentary}}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        Moyenne: {{subject_grades.average|number_format(2)}}
+                    </td>
+                </tr>
+            </table>
 
-    {% for subject, subject_grades in grades %}
-        <h1>{{loop.index}}: {{subject}}</h1>
-        {% for grade in subject_grades.grades %}
-            {{grade.grade}} <br>
-            {{grade.commentary}} <br>
         {% endfor %}
-        <p>Moyenne: {{subject_grades.average|number_format(2)}} </p>
+    </div>
 
-    {% endfor %}
-</div>
+
 {% endblock %}
 
 {% block javascript %}

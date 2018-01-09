@@ -11,7 +11,14 @@
     <!-- Bootstrap CSS -->
   </head>
   <body>
-    {% block body %}{% endblock %}
+    <div class="blue-grey row white-text ">
+      {% block header %} {% endblock %}
+    </div>
+    <div class="container blue-grey-text">
+      {% block body %}{% endblock %}
+    </div>
+
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/js/materialize.min.js"></script>
     {% block javascript %}{% endblock %}
