@@ -12,6 +12,13 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        if($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin');
+        } else if($this->isGranted('ROLE_TEACHER')) {
+            return $this->redirectToRoute('teacher');
+        } else if($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('student');
+        }
         return $this->render('Default/index.html.twig');
     }
     /**
@@ -74,6 +81,10 @@ class DefaultController extends Controller
    */
   public function createGradesAction($slug)
   {
+
+    if(!$this->isGranted('ROLE_TEACHER')) {
+        return $this->render('Default/index.html.twig');
+    }
 
     $request = Request::createFromGlobals();
     $em = $this->getDoctrine()->getEntityManager();
