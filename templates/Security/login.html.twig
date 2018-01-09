@@ -4,9 +4,16 @@
 
 {% endblock %}
 
+{% block header %}
+    <div class="nav-wrapper">
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{{path("login")}}">Login</a></li>
+        <li><a href="{{path("register")}}">Register</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
 {% block body %}
-
-
 <div class="container">
     <div class="container-content">
         <div class="login-content">

@@ -18,8 +18,9 @@ class DefaultController extends Controller
             return $this->redirectToRoute('teacher');
         } else if($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('student');
+        } else {
+            return $this->redirectToRoute('login');
         }
-        return $this->render('Default/index.html.twig');
     }
     /**
      * @Route("/student", name="student")
