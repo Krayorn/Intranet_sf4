@@ -72,6 +72,11 @@ class User implements UserInterface
     private $role;
 
     /**
+     * @ORM\Column(name="sortRole", type="string", length=100)
+     */
+    private $sortRole;
+
+    /**
      * @var datetime
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
@@ -79,7 +84,7 @@ class User implements UserInterface
      */
     private $createdAt;
     /**
-     * @ORM\ManyToMany(targetEntity="Subject", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Subject", inversedBy="users", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="users_subjects")
      */
     private $subjects;
@@ -306,19 +311,19 @@ class User implements UserInterface
         return $this->subjects;
     }
 
-    /**
-     * Set the value of subjects
-     *
-     * @return  self
-     */
-    public function setSubjects($subjects)
-    {
-        $this->subjects = $subjects;
+    // /**
+    //  * Set the value of subjects
+    //  *
+    //  * @return  self
+    //  */
+    // public function setSubjects($subjects)
+    // {
+    //     $this->subjects = $subjects;
 
-        return $this;
-    }
+    //     return $this;
+    // }
     /**
-     * Add students
+     * Add subject
      *
      * @return self
      */
@@ -326,7 +331,7 @@ class User implements UserInterface
     {
         $this->subjects[] = $subject;
         if(!$subject->getUsers()->contains($this)){
-            $subject->addUsers($this);
+            $subject->addUser($this);
         }
 
         return $this;
@@ -356,6 +361,26 @@ class User implements UserInterface
     public function setGrades($grades)
     {
         $this->grades = $grades;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sortRole
+     */
+    public function getSortRole()
+    {
+        return $this->sortRole;
+    }
+
+    /**
+     * Set the value of sortRole
+     *
+     * @return  self
+     */
+    public function setSortRole($sortRole)
+    {
+        $this->sortRole = $sortRole;
 
         return $this;
     }

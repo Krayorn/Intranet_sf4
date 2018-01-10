@@ -7,6 +7,9 @@ use App\Repository;
 use App\Entity\Grades;
 class DefaultController extends Controller
 {
+
+
+
     /**
      * @Route("/", name="home")
      */
@@ -74,7 +77,19 @@ class DefaultController extends Controller
         }
         $teacher = $this->getUser();
         $teacher_subjects = $teacher->getSubjects();
-        return $this->render('Default/teacher.html.twig',
+        $grades = new Grades();
+
+        $form = $this->createFormBuilder($grades)
+            ->add('create_subject', SelectType::class)
+            ->add('grade', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Task'))
+            ->getForm();
+
+
+
+        return $this->render('Default/teacher.html.twig',array(
+            'form' => $form->createView()),
             ['teacher_subjects' => $teacher_subjects]);
     }
     /**
