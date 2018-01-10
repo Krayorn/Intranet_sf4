@@ -18,32 +18,16 @@
 
 {% block body %}
 
-    <div class="section">
-        <h4> Subscribe to a new subject </h4>
-        <div class="row">
-            <form class="col s12" action="{{ path('student') }}" method="POST" id="subject-form" name="subject-form">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <select name='subject' id="subject">
-                            <option value="" disabled selected>Choose a subject</option>
-                            {% for subject in subjects %}
-                                {% if subject not in student_subject %}
-                                    <option value="{{subject.id}}">{{subject.title}}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                        <label>Subject Select</label>
-                    </div>
-                </div>
-                <div class="row center-align">
-                    <button class="btn waves-effect waves-light blue-grey accent-1" id ="button-submit" type="submit" name="action">SEND
-                    <i class="material-icons right">send</i>
-                    </button>
-                </div>
-            </form>
+    {% if subjects != null%}
+        <div class="section">
+            <h4> Subscribe to a new subject </h4>
+            <div class="row">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
-    </div>
-
+    {% endif %}
     <div class="section">
         <h4> Your subjects : </h4>
         <div class="row">

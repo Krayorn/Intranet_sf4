@@ -5,6 +5,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository;
 use App\Entity\Grades;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 class DefaultController extends Controller
 {
     /**
@@ -51,18 +54,48 @@ class DefaultController extends Controller
             }
             $grades[$subject]['average'] = $sum / count($grades[$subject]['grades']);
         }
-        if ($request->getMethod() === 'POST') {
-            $idSubject = $request->get('subject');
+
+        $choices = [];
+        foreach($all_subjects as $subject) {
+            $alreadySubscribed = false;
+            foreach($student_subject as $studentSubject) {
+                if ($studentSubject->getTitle() == $subject->getTitle()) {
+                    $alreadySubscribed = true;
+                }
+            }
+            if(!$alreadySubscribed) {
+                $choices[$subject->getTitle()] = $subject->getId();
+            }
+        }
+
+        if ($choices === []) {
+            $all_subjects = null;
+        }
+
+        $form = $this->createFormBuilder()
+            ->setMethod("Post")
+            ->add('subject', ChoiceType::class, array(
+                'choices'  => $choices))
+            ->add('save', SubmitType::class, array('label' => 'Subscripe to subject'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $idSubject = $data['subject'];
             $subject = $subjectRepository->findOneById($idSubject);
             if($subject !== null) {
                 $user->addSubject($subject);
                 $em->flush();
             }
         }
+
         return $this->render('Default/student.html.twig',
             ['subjects' => $all_subjects,
             'student_subject' => $student_subject,
-            'grades' => $grades]);
+            'grades' => $grades,
+            'form' => $form->createView()]);
     }
     /**
      * @Route("/teacher", name="teacher")

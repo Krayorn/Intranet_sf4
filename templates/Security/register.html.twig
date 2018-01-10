@@ -20,6 +20,7 @@
         <div class="row">
           <p id="welcome"> <p>
             <form class="col s12" action="{{ path('register') }}" method="POST" id="register-form">
+                {# <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" /> #}
                 <h1 class="title-content-container">Register</h1>
                 <p class="error" id="error"></p>
             <div class="row">
@@ -57,7 +58,7 @@
                 </div>
             </div>
             <div class="row center-align">
-                <button class="btn waves-effect waves-light grey-blue accent-1" type="submit" name="action">Submit
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                     <i class="material-icons right">send</i>
                 </button>
             </div>

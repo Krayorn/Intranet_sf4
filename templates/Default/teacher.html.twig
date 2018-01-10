@@ -58,7 +58,7 @@
                             {% endif %}
 
                         <!-- Trigger/Open The Modal -->
-                        <button class="myBtn btn waves-effect waves-light grey-blue accent-1" type="submit" name="action">
+                        <button class="myBtn btn waves-effect waves-light" type="submit" name="action">
                             Add Grade
                         </button>
                         <!-- The Modal -->
@@ -66,6 +66,7 @@
                             <div class="modal-content">
                                 <span class="close">&times;</span>
                                 <form class="col s12" action="{{ path('create_grade', {'slug': student.id}) }}" method="POST" id="message-form" name="message-form">
+                                    {# <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" /> #}
                                     <div class="name">{{student.firstname}} {{student.lastname}}</div>
                                     <p class="error" id="error"></p>
                                     <input type="hidden" name="subject_id" value={{subject.id}} />
@@ -82,11 +83,12 @@
                                         </div>
                                     </div>
                                     <div class="row center-align">
-                                        <button class="btn waves-effect waves-light grey-blue accent-1" type="submit" name="action">
+                                        <button class="btn waves-effect waves-light" type="submit" name="action">
                                             Validate<i class="material-icons right">send</i>
                                         </button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     {% endif %}
