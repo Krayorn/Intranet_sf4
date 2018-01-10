@@ -3,16 +3,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use App\Repository;
-use App\Entity\Grades;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Repository;
+use App\Entity\Grades;
 
 class DefaultController extends Controller
 {
-
-
-
     /**
      * @Route("/", name="home")
      */
@@ -110,19 +107,8 @@ class DefaultController extends Controller
         }
         $teacher = $this->getUser();
         $teacher_subjects = $teacher->getSubjects();
-        $grades = new Grades();
 
-        $form = $this->createFormBuilder($grades)
-            ->add('create_subject', SelectType::class)
-            ->add('grade', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Task'))
-            ->getForm();
-
-
-
-        return $this->render('Default/teacher.html.twig',array(
-            'form' => $form->createView()),
+        return $this->render('Default/teacher.html.twig',
             ['teacher_subjects' => $teacher_subjects]);
     }
     /**
