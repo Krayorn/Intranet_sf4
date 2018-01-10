@@ -1,9 +1,77 @@
 easy_admin:
-    site_name: 'YOUPI INTRANET'
+    site_name: "Youpi Intranet"
     design:
-        brand_color: '#200157'
+        brand_color: "#607d8b"
+        menu:
+            - label: 'Users'
+              children: ['Student', 'Teacher', 'Admin']
+            - label: 'Grades'
+              children: [{ entity: 'Grades', label: 'All grades' }]
+            - label: 'Subject List'
+              children: ['Subject']
     entities:
-        # List the entity class name you want to manage
-        - App\Entity\User
-        - App\Entity\Subject
-        - App\Entity\Grades
+
+        Student:
+            class: App\Entity\User
+            list:
+                actions: ['edit', 'delete' ,'search', 'show']
+                dql_filter: "entity.sortRole = 'ROLE_USER' "
+                fields: ['id', 'email', 'firstname', 'lastname' ,'createdAt']
+            form:
+                fields:
+                    - { property: 'email', type: 'text', label: 'Email' }
+                    - { property: 'firstname', label: 'Prénom' }
+                    - { property: 'lastname', label: 'Nom' }
+                    - { property: 'username', label: 'Pseudo' }
+                    - { property: 'role', label: 'Role' }
+                    - { property: 'sortRole', label: 'Role' }
+                    - { property: 'password', label: 'Mot de passe' }
+                    - { property: 'createdAt', label: 'Cree le ' }
+                    - { property: 'subjects', label: 'Matières' }
+                    - { property: 'grades', label: 'Notes' }
+        Teacher:
+            class: App\Entity\User
+            list:
+                actions: ['edit', 'delete' ,'search', 'show']
+                dql_filter: "entity.sortRole = 'ROLE_TEACHER' "
+                fields: ['id', 'email', 'firstname', 'lastname','createdAt']
+            form:
+                fields:
+                    - { property: 'email', type: 'text', label: 'Email' }
+                    - { property: 'firstname', label: 'Prénom' }
+                    - { property: 'lastname', label: 'Nom' }
+                    - { property: 'username', label: 'Pseudo' }
+                    - { property: 'role', label: 'Role' }
+                    - { property: 'sortRole', label: 'Role' }
+                    - { property: 'password', label: 'Mot de passe' }
+                    - { property: 'createdAt', label: 'Cree le ' }
+
+
+
+        Subject:
+            class: App\Entity\Subject
+            list:
+                actions: ['edit', 'delete' ,'search', 'show']
+            form:
+                fields:
+                    - { property: 'title', type: 'text', label: 'Nom de la matière' }
+
+
+
+        Grades:
+            class: App\Entity\Grades
+            list:
+                actions: ['edit', 'delete' ,'search', 'show', { name: 'new', label: 'Add Note' }]
+                title: "Toutes les notes"
+                sort: ["users", 'ASC']
+                fields: ['id', 'grade', 'commentary', 'users','subjects']
+            search:
+                sort: ["users", 'ASC']
+
+        Admin:
+            class: App\Entity\User
+            list:
+                actions: ['edit', 'delete' ,'search', 'show']
+                dql_filter: "entity.sortRole = 'ROLE_ADMIN' "
+                fields: ['id', 'email', 'firstname', 'lastname', 'createdAt']
+
