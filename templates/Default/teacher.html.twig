@@ -4,80 +4,104 @@
    <link type="text/css" rel="stylesheet" href="{{asset("css/modal.css")}}"/>
 {% endblock %}
 
+{% block header %}
+    <p class="col s3" >{{app.user.firstname}} {{app.user.lastname}}</p>
+
+    <p class="col s6 center-align">Teacher Page</p>
+
+    <p class="col s3 right-align">
+        <a class="white-text" href="{{path("logout")}}">Logout</a>
+    </p>
+
+{% endblock %}
+
 {% block body %}
 
-<div class="ctn">
-    <div class="bg-home">
-
-        <div class="bg-button hvr-grow-shadow">
-                <a href="{{path("logout")}}"><i class="material-icons ajust-icon">keyboard_tab</i></a>
-        </div>
-
-        Hey {{app.user.firstname}} {{app.user.lastname}}
-        <h1 class="welcome">This'll be the teacher default Page !</h1>
-
-        <h1 class="welcome">Here you'll see the list of the subjects you teach</h1>
+    <div class="section">
+        <h4>The subjects you teach :</h4>
+        <div>
             {% for subject in teacher_subjects %}
-                {{subject.title}}
+                <p>{{subject.title}}</p>
             {% endfor %}
+        </div>
+    </div>
 
-        <h1 class="welcome">Here you'll see the list of the students in each of your subjects</h1>
+    <div class="section">
+        <h4>Add grade to Student interface :</h4>
             {% for subject in teacher_subjects %}
-                <h2>{{subject.title}}</h2>
+                <h5>{{subject.title}} :</h5>
                 {% for student in subject.users %}
                     {% if student.roles[0] == 'ROLE_USER' %}
-                       <div id="student_name"> {{student.firstname}} {{ student.lastname}}</div><br/>
+                    <div>
+                        {{student.firstname}} {{ student.lastname}}
+                    </div>
+                            {% set already_got_grade = false %}
+                            {% for grade in student.grades %}
+                                {% if grade.subjects.title == subject %}
+                                    {% if not already_got_grade %}
+                                        <table>
+                                        {% set already_got_grade = true %}
+                                    {% endif %}
+                                    <tr>
+                                        <td>
+                                            {{grade.grade}}
+                                        </td>
+                                        <td>
+                                            {{grade.commentary}}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if already_got_grade %}
+                                </table>
+                            {% endif %}
+
                         <!-- Trigger/Open The Modal -->
-                        <button class="myBtn">Open Modal</button>
+                        <button class="myBtn">Add Grade</button>
 
                         <!-- The Modal -->
                         <div id="myModal" class="modal">
-
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <form class="col s12" action="{{ path('create_grade', {'slug': student.id}) }}" method="POST" id="message-form" name="message-form">
-                                <div class="name">{{student.firstname}} {{student.lastname}}</div>
-                                <p class="error" id="error"></p>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <select name='subject_grade' id="subject_grade">
-                                        <option value="" disabled selected>Choose a subject</option>
-                                            <option value="{{subject.id}}">{{subject.title}}</option>
-                                        </select>
-                                        <label>Subject Select</label>
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <form class="col s12" action="{{ path('create_grade', {'slug': student.id}) }}" method="POST" id="message-form" name="message-form">
+                                    <div class="name">{{student.firstname}} {{student.lastname}}</div>
+                                    <p class="error" id="error"></p>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <select name='subject_grade' id="subject_grade">
+                                            <option value="" disabled selected>Choose a subject</option>
+                                                <option value="{{subject.id}}">{{subject.title}}</option>
+                                            </select>
+                                            <label>Subject Select</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                    <input type="text" autocomplete="new-grade" id="grade" class="materialize-textarea validate" name="grade"/>
-                                    <label for="grade">grade</label>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                        <input type="text" autocomplete="new-grade" id="grade" class="materialize-textarea validate" name="grade"/>
+                                        <label for="grade">grade</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                    <textarea autocomplete="new-commentary" id="commentary_create" class="materialize-textarea validate" name="commentary_create"></textarea>
-                                    <label for="commentary_create">Commentary</label>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                        <textarea autocomplete="new-commentary" id="commentary_create" class="materialize-textarea validate" name="commentary_create"></textarea>
+                                        <label for="commentary_create">Commentary</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row center-align">
-                                    <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="row center-align">
+                                        <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">
+                                            <i class="material-icons right">send</i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        </div>
-                {% for grade in student.grades %}
-                    {% if grade.subjects.title == subject %}
-                        {{grade.grade}} and {{grade.commentary}}<br />
-                    {% endif %}
-                {% endfor %}
                     {% endif %}
                 {% endfor %}
             {% endfor %}
     </div>
-</div>
+
 {% endblock %}
 
 {% block javascript %}
