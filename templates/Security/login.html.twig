@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block header %}
-    <div class="nav-wrapper">
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="{{path("login")}}">Login</a></li>
-        <li><a href="{{path("register")}}">Register</a></li>
-        </ul>
-    </div>
+    <p class="col s6 offset-s3 center-align">Login Page</p>
+
+    <p class="col s3 right-align">
+        <a class="white-text" href="{{path("register")}}">Register</a>
+    </p>
 {% endblock %}
 
 {% block body %}
@@ -36,7 +35,7 @@
 
 
                 <div class="row center-align">
-                    <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">LOGIN
+                    <button class="btn waves-effect waves-light grey-blue accent-1" type="submit" name="action">LOGIN
                         <i class="material-icons right">offline_pin</i>
                     </button>
                 </div>
