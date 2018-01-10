@@ -58,40 +58,32 @@
                             {% endif %}
 
                         <!-- Trigger/Open The Modal -->
-                        <button class="myBtn">Add Grade</button>
-
+                        <button class="myBtn btn waves-effect waves-light grey-blue accent-1" type="submit" name="action">
+                            Add Grade
+                        </button>
                         <!-- The Modal -->
                         <div id="myModal" class="modal">
-                            <!-- Modal content -->
                             <div class="modal-content">
                                 <span class="close">&times;</span>
                                 <form class="col s12" action="{{ path('create_grade', {'slug': student.id}) }}" method="POST" id="message-form" name="message-form">
                                     <div class="name">{{student.firstname}} {{student.lastname}}</div>
                                     <p class="error" id="error"></p>
+                                    <input type="hidden" name="subject_id" value={{subject.id}} />
                                     <div class="row">
                                         <div class="input-field col s12">
-                                            <select name='subject_grade' id="subject_grade">
-                                            <option value="" disabled selected>Choose a subject</option>
-                                                <option value="{{subject.id}}">{{subject.title}}</option>
-                                            </select>
-                                            <label>Subject Select</label>
+                                            <input type="text" autocomplete="new-grade" id="grade" class="materialize-input validate" name="grade"/>
+                                            <label for="grade">grade</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input-field col s12">
-                                        <input type="text" autocomplete="new-grade" id="grade" class="materialize-textarea validate" name="grade"/>
-                                        <label for="grade">grade</label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                        <textarea autocomplete="new-commentary" id="commentary_create" class="materialize-textarea validate" name="commentary_create"></textarea>
-                                        <label for="commentary_create">Commentary</label>
+                                            <textarea autocomplete="new-commentary" id="commentary_create" class="materialize-textarea validate" name="commentary_create"></textarea>
+                                            <label for="commentary_create">Commentary</label>
                                         </div>
                                     </div>
                                     <div class="row center-align">
-                                        <button class="btn waves-effect waves-light red accent-1" type="submit" name="action">
-                                            <i class="material-icons right">send</i>
+                                        <button class="btn waves-effect waves-light grey-blue accent-1" type="submit" name="action">
+                                            Validate<i class="material-icons right">send</i>
                                         </button>
                                     </div>
                                 </form>

@@ -80,28 +80,26 @@ class DefaultController extends Controller
     /**
    * @Route("/create/grade/{slug}", name="create_grade")
    */
-  public function createGradesAction($slug)
-  {
-
+    public function createGradesAction($slug)
+    {
     if(!$this->isGranted('ROLE_TEACHER')) {
         return $this->render('Default/index.html.twig');
     }
 
     $request = Request::createFromGlobals();
     $em = $this->getDoctrine()->getEntityManager();
-    $subject_form = $request->get('subject_grade');
     $user = $em->getRepository('App\Entity\User')->findOneById($slug);
-    $subject = $em->getRepository('App\Entity\Subject')->findOneById($subject_form);
-
+    $subject = $em->getRepository('App\Entity\Subject')->findOneById($request->get('subject_id'));
     if ($request->getMethod() === 'POST') {
         $grade = new Grades;
         $grade -> setUsers($user);
         $grade -> setSubjects($subject);
         $grade -> setGrade($request->get('grade'));
         $grade -> setCommentary($request->get('commentary_create'));
+
         $em->persist($grade);
         $em->flush();
         return $this->redirectToRoute('teacher');
     }
-  }
+    }
 }
